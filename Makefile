@@ -15,20 +15,22 @@ err=(echo -e "$(shell date +$(DAT)): $(RED)** ERROR ** :$(STP) $1")
 pdat=(echo -e "$(shell date +$(DAT)): INFO: Starting build on $(shell \
         date +"%A %B %d, %Y") at $(shell date +"%H:%M %Z") ")
 
-
+## Hello World! Program, simple printout
+hello:
+	echo "Hello World!"
 
 help:
 	printf "Available targets:\n\n" ;
 	awk '/^[a-zA-Z\-_0-9%:\\]+/ { \
-      helpMessage = match(lastLine, /^## (.*)/) ; \
-      if (helpMessage) { \
-        helpCommand = $$1 ; \
-        helpMessage = substr(lastLine, RSTART + 3, RLENGTH) ; \
-        gsub("\\\\", "", helpCommand) ; \
-        gsub(":+$$", "", helpCommand) ; \
-        if (length(helpCommand)>$(help_target_name_limit)) \
-          helpCommand=substr(helpCommand,0,$(help_target_name_limit))"←" ; \
-        printf " \x1b[32;01m%-$(help_target_desc_start)s\x1b[0m |%s\n", helpCommand, helpMessage ; \
-      } \
-    } \
-    { lastLine = $$0 }' $(MAKEFILE_LIST) ;
+helpMessage = match(lastLine, /^## (.*)/) ; \
+if (helpMessage) { \
+  helpCommand = $$1 ; \
+  helpMessage = substr(lastLine, RSTART + 3, RLENGTH) ; \
+  gsub("\\\\", "", helpCommand) ; \
+  gsub(":+$$", "", helpCommand) ; \
+  if (length(helpCommand)>$(help_target_name_limit)) \
+    helpCommand=substr(helpCommand,0,$(help_target_name_limit))"←" ; \
+    printf " \x1b[32;01m%-$(help_target_desc_start)s\x1b[0m |%s\n", helpCommand, helpMessage ; \
+  } \
+} \
+{ lastLine = $$0 }' $(MAKEFILE_LIST) ;
